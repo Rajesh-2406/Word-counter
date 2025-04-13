@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Configure') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Aahil13/Word-counter']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Rajesh-2406/Word-counter']])
             }
         }
         stage('Building image') {
