@@ -16,9 +16,9 @@ pipeline {
         stage('Pushing to ECR') {
             steps {
                 withAWS(credentials: 'AWS-CREDS', region: 'us-east-1') {
-                    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 600222537277.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker tag firstrepo:latest 600222537277.dkr.ecr.us-east-1.amazonaws.com/firstrepo:latest'
-                    sh 'docker push 600222537277.dkr.ecr.us-east-1.amazonaws.com/firstrepo:latest'
+                    sh 'aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/j0a5v2d2'
+                    sh 'docker tag k8-repo:latest public.ecr.aws/j0a5v2d2/k8-repo:latest'
+                    sh 'docker push public.ecr.aws/j0a5v2d2/k8-repo:latest'
                 }
             }
         }
