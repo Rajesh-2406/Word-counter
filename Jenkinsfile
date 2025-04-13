@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Building image') {
             steps {
-                sh 'docker build -t Word-counter .'
+                sh 'docker build -t word-counter .'
             }
         }
         
