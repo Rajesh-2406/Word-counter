@@ -29,7 +29,28 @@ pipeline {
                      withAWS(cerdentials: 'AWS-CREDS', region: 'us-east-1'){
                         sh 'aws eks update-kubeconfig --name k8-cluster --region us-east-1'
                         sh 'kubectl apply -f EKS-Deployment.yaml'
+
+                     }
+                }
+            }
+        }
+         stage('Get Service URL') {
+                    steps {
+                        script {
+                            def serviceUrl = ""
+                            // Wait for the LoadBalancer IP to be assigned
+                            timeout(time: 5, unit: 'MINUTES') {
+                                while(serviceUrl == "") {
+                                    serviceUrl = sh(script: "kubectl get svc word-counter-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'", returnStdout: true).trim()
+                                    if(serviceUrl == "") {
+                                        echo "Waiting for the LoadBalancer IP..."
+                                        sleep 10
+                                    }
+                                }
+                            }
+                            echo "Service URL: http://${serviceUrl}"
                         }
+                    }
                 }
             }
         }
