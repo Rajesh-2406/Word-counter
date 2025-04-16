@@ -51,7 +51,6 @@ pipeline {
                             echo "Service URL: http://${serviceUrl}"
                         }
                     }
-                }
-            }
-        }
+
+         }
     }
