@@ -15,7 +15,7 @@ pipeline {
         
          stage('Pushing to ECR') {
             steps {
-                withAWS(credentials: 'AWS-CREDS', region: 'us-east-1') {
+                withAWS(credentials: 'aws-creds', region: 'us-east-1') {
                     sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 600222537277.dkr.ecr.us-east-1.amazonaws.com'
                     sh 'docker tag word-counter:latest 600222537277.dkr.ecr.us-east-1.amazonaws.com/word-counter:latest'
                     sh 'docker push 600222537277.dkr.ecr.us-east-1.amazonaws.com/word-counter:latest'
@@ -26,7 +26,7 @@ pipeline {
         stage('K8S Deploy') {
             steps {
                 script {
-                     withAWS(cerdentials: 'AWS-CREDS', region: 'us-east-1'){
+                     withAWS(cerdentials: 'aws-creds', region: 'us-east-1'){
                         sh 'aws eks update-kubeconfig --name k8-cluster --region us-east-1'
                         sh 'kubectl apply -f EKS-Deployment.yaml'
 
